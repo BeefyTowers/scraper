@@ -29,7 +29,7 @@ def get_flavours(page_urls):
         flavours = []
         for span in section.find_all("span"):
             flavours.append(span.text)
-        title = soup.title
+        title = (str(soup.title).split('|', 1)[0].strip("<title>"))
         grapes.append((title, flavours))
     return grapes
 
@@ -42,7 +42,7 @@ def export(data):
             quotechar='"',
             quoting=csv.QUOTE_MINIMAL)
         for title, flavour in data:
-            writer.writerow([title, flavour])
+            writer.writerow([title] + flavour)
 
 
 if __name__ == "__main__":
